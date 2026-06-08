@@ -21,11 +21,6 @@ if nonce := r.Header.Get("X-Nonce"); nonce != "" {
 
 message := strings.Join(parts, "\n")
 hash := sha256.Sum256([]byte(message))
-//r, s, err := ecdsa.Sign(rand.Reader, privateKey, hash[:])
-//if err != nil {
-//	t.Fatal(err)
-//}
-//signature := append(r.Bytes(), s.Bytes()...)
 signature, err := ecdsa.SignASN1(rand.Reader, privateKey, hash[:])
 signStr := hex.EncodeToString(signature)
 fmt.Println("sign string: ", signStr)
